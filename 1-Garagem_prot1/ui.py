@@ -26,3 +26,12 @@ def print_menu_inicial():
     print("3 - Atualizar...")
     print("4 - Remover...")
     print("0 - Sair")
+    
+# Menu Inserir
+
+def print_menu_inserir():
+    
+    print_titulo("Inserir Veiculo")
+    print("1 - Inserir Carro")
+    print("2 - Inserir Moto")
+    print("3 - Inserir Bicicleta")
