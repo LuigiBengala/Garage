@@ -1,52 +1,47 @@
 
+-- Criação tabela de carro
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO"; 
-START TRANSACTION;
-SET time_zone = "+00:00"; 
+CREATE TABLE IF NOT EXISTS 'carro'(
 
+    id int AUTO_INCREMENT PRIMARY KEY,
+    marca varchar(50) NOT NULL,
+    modelo varchar(50) NOT NULL,
+    ano int NOT NULL,
+    cor varchar(50) NOT NULL,
+    matricula varchar(50) NOT NULL,
+    num_portas int NOT NULL,
+    num_lugares int NOT NULL,
+    combustivel varchar(50) NOT NULL,
+    cilindrada int NOT NULL,
+    potencia int NOT NULL,
+);
 
--- Estrutura da tabela carro
+CREATE INDEX IF NOT EXISTS index_carro_marca ON carro(marca); -- Index para marca do carro (para pesquisa) 
 
-CREATE TABLE 'carro'(
+-- Criação tabela mota
 
-    'id' int(11) PRIMARY KEY NOT NULL ,
-    'matricula' varchar(10) NOT NULL,
-    'marca' varchar(20) NOT NULL,
-    'modelo' varchar(20) NOT NULL,
-    'cor' varchar(20) NOT NULL,
-    'ano' int(4) NOT NULL,
-    'combustivel' varchar(20) NOT NULL,
-    'cilindrada' varchar(10) NOT NULL,
-    'potencia' varchar(10) NOT NULL,
-    'nportas' int(10) NOT NULL,
-    'nlugares' int(10) NOT NULL,
-    'dono' varchar(20) NOT NULL,
-)
+CREATE TABLE IF NOT EXISTS 'mota'(
+    
+    id int AUTO_INCREMENT PRIMARY KEY,
+    marca varchar(50) NOT NULL,
+    modelo varchar(50) NOT NULL,
+    ano int NOT NULL,
+    cor varchar(50) NOT NULL,
+    matricula varchar(50) NOT NULL,
+    cilindrada int NOT NULL,
+    potencia int NOT NULL,
+);
 
+CREATE INDEX IF NOT EXISTS index_mota_marca ON mota(marca); -- Index para marca da mota (para pesquisa)
 
--- Estrutura da tabela Moto
+-- Criação tabela bicletas
 
-CREATE TABLE 'moto'(
+CREATE TABLE IF NOT EXISTS 'bicicleta'(
 
-    'id' int(11) PRIMARY KEY NOT NULL ,
-    'matricula' varchar(10) NOT NULL,
-    'marca' varchar(20) NOT NULL,
-    'modelo' varchar(20) NOT NULL,
-    'cor' varchar(20) NOT NULL,
-    'ano' int(4) NOT NULL,
-    'combustivel' varchar(20) NOT NULL,
-    'cilindrada' varchar(10) NOT NULL,
-    'potencia' varchar(10) NOT NULL,
-    'dono' varchar(20) NOT NULL,
-)
-
--- Estrutura da tabela bicicleta
-
-CREATE TABLE 'bicicleta'(
-
-    'id' int(11) PRIMARY KEY NOT NULL ,
-    'marca' varchar(30) NOT NULL,
-    'modelo' varchar(30) NOT NULL,
-    'sistema_mudancas' varchar(50) NOT NULL,
-    'dono' varchar(20) NOT NULL,
-)
+    id int AUTO_INCREMENT PRIMARY KEY,
+    marca varchar(50) NOT NULL,
+    modelo varchar(50) NOT NULL,
+    ano int NOT NULL,
+    cor varchar(50) NOT NULL,
+    sistema_AS0mudanças varchar(50) NOT NULL,
+);
