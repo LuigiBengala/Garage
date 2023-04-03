@@ -45,3 +45,5 @@ CREATE TABLE IF NOT EXISTS 'bicicleta'(
     cor varchar(50) NOT NULL,
     sistema_AS0mudanças varchar(50) NOT NULL,
 );
+
+CREATE INDEX IF NOT EXISTS index_bicicleta_marca ON bicicleta(marca); -- Index para marca da bicicleta (para pesquisa)
