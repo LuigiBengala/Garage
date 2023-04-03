@@ -19,7 +19,6 @@ def print_titulo(titulo:str):
 # Menu principal
 
 def print_menu_inicial():
-    
     print_titulo("Menu Principal")
     print("1 - Inserir...")
     print("2 - Listar Garagem")
@@ -37,6 +36,7 @@ def print_menu_inserir():
     print("1 - Inserir Carro")
     print("2 - Inserir Moto")
     print("3 - Inserir Bicicleta")
+    print("0 - Voltar")
     
 # Menu Atualizar
 

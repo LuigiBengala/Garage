@@ -50,7 +50,7 @@ def input_ano(mensagem: str)-> int:
 #Conectar a base de dados
 
 def conectar_base_dados():
-    
+
     configData = {
         "user": "root",
         "password": "root",
