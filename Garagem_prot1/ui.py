@@ -1,20 +1,5 @@
 import os
-from utilidades import *
-
-# Limpar a consola
-
-def limpar_consola():
-    os.system("cls" if os.name == "nt" else "clear")
-    
-# Pressione Enter para continuar
-    
-def press_enter():
-    input("Pressione Enter para continuar...") 
-    
-# Titulo
-
-def print_titulo(titulo:str):
-    print(f"<----- {titulo} ----->")
+from classes import *
     
 # Menu principal
 
