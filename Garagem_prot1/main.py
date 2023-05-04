@@ -1,4 +1,4 @@
-from classes import *
+from funcoes import *
 from tables import *
 import sqlite3
 

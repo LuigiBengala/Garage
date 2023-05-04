@@ -1,5 +1,4 @@
 import os 
-import classes
 import sqlite3
 
 lista_carros = list()
