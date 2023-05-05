@@ -1,77 +1,188 @@
-import os 
+import os
 import sqlite3
 
-lista_carros = list()
-lista_motos = list()
-lista_bicicleta = list()
-lista_dono = list()
 
-def limpar_consola():
+def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
-    
-def pressione_enter():
-    input("Pressione ENTER para continuar...")
-    
-# ----------- CARROS -----------
+
+
+def press_enter():
+    input("Press ENTER to continue...")
+
+# ----------- CARS -----------
+
 
 def add_carros():
+
+    clear_console()
+
+    global conn
+    conn = sqlite3.connect('garage.db')
+
+    print("# ----- ADD CAR ----- #")
+    brand = input("Brand: ")
+    model = input("Model: ")
+    year = int(input("Year: "))
+    fuel = input("Fuel: ")
+    engine_capacity = float(input("Engine Capacity: "))
+    engine_power = input("Engine Power (Horse Power): ")
+    num_seats = int(input("Number of Seats: "))
+
+    sql = '''
+        INSERT INTO carros(brand, model, year, fuel, engine_capacity, engine_power, num_seats) VALUES(?,?,?,?,?,?,?);
+    '''
+
+    c = conn.cursor()
+
+    try:
+        c.execute(sql, (brand, model, year, fuel,
+                  engine_capacity, engine_power, num_seats,))
+        conn.commit()
+        print("The car was added successfully!")
+        press_enter()
+    except Exception as error:
+        print("Error: ", error)
+        press_enter()
+
+    clear_console()
+
+def show_cars():
+
+    clear_console()
+
+    global conn
+    conn = sqlite3.connect('garage.db')
+
+    sql = '''
+        SELECT id, brand, model, year, fuel, engine_capacity, engine_power, num_seats FROM carros;
+    '''
+
+    c = conn.execute(sql)
+
+    print("# ----- CARS ----- #")
+    print(" ")
+    print("-------------------------------")
+
+    for data in c:
+        print("ID: ", data[0])
+        print("Brand: ", data[1])
+        print("Model: ", data[2])
+        print("Year: ", data[3])
+        print("Fuel: ", data[4])
+        print("Engine Capacity: ", data[5])
+        print("Engine Power(Horse Power): ", data[6])
+        print("Number of Seats: ", data[7])
+        print("-------------------------------")
+        print(" ")
+    press_enter()
+
+def remove_cars():
     
-    limpar_consola()
+        clear_console()
+    
+        global conn
+        conn = sqlite3.connect('garage.db')
+        
+        show_cars()
+    
+        print("# ----- REMOVE CAR ----- #")
+        id = int(input("Insert the ID of the car you want to remove: "))
+    
+        sql = '''
+            DELETE FROM carros WHERE id = ?;
+        '''
+    
+        c = conn.cursor()
+    
+        try:
+            c.execute(sql, (id,))
+            conn.commit()
+            print("The car was removed successfully!")
+            press_enter()
+        except Exception as error:
+            print("Error: ", error)
+            press_enter()
+    
+        clear_console()
+
+
+# ----------- DRIVERS -----------
+
+
+def add_drivers():
+    clear_console()
     
     global conn
-    conn = sqlite3.connect('garagem.db')
+    conn = sqlite3.connect('garage.db')
     
-    print("Insira os dados do carro: ")
-    marca = input("Marca: ")
-    modelo = input("Modelo: ")
-    ano = int(input("Ano: "))
-    combustivel = input("Combustivel: ")
-    cilindrada = float(input("Cilindrada: "))
-    potencia = input("Potencia: ")
-    num_lugares = int(input("Numero de lugares: "))
+    print("# ----- ADD DRIVER ----- #")
+    name = input("Name: ")
+    drivers_license_type = input("Drivers License Type: ")
+    years_of_license = int(input("Years of License: "))
     
     sql = '''
-        INSERT INTO carros(marca, modelo, ano, combustivel, cilindrada, potencia, num_lugares) VALUES(?,?,?,?,?,?,?);
+        INSERT INTO condutores(name, drivers_license_type, years_of_license) VALUES(?,?,?);
     '''
     
     c = conn.cursor()
     
     try:
-        c.execute(sql, (marca, modelo, ano, combustivel, cilindrada, potencia, num_lugares,))
+        c.execute(sql, (name, drivers_license_type, years_of_license,))
         conn.commit()
-        print("Carro adicionado com sucesso!")
-        pressione_enter()
-    except Exception as e:
-        print("Erro: ", e)
-        pressione_enter()
-        
-    limpar_consola()
+        print("The driver was added successfully!")
+        press_enter()
+    except Exception as error:
+        print("Error: ", error)
+        press_enter()
 
-def show_cars():
-    
-    limpar_consola()
+def display_drivers():
     
     global conn
-    conn = sqlite3.connect('garagem.db')
+    conn = sqlite3.connect('garage.db')
     
     sql = '''
-        SELECT id, marca, modelo, ano, combustivel, cilindrada, potencia, num_lugares FROM carros;
+        SELECT id, name, drivers_license_type, years_of_license FROM condutores;
     '''
     
     c = conn.execute(sql)
     
-    print("# ----- CARROS ----- #")
+    print("")
+    print("# ----- DRIVERS ----- #")
     print(" ")
+    print("-------------------------------")
     
-    for dados in c:
-        print("ID: ", dados[0])
-        print("Marca: ", dados[1])
-        print("Modelo: ", dados[2])
-        print("Ano: ", dados[3])
-        print("Combustivel: ", dados[4])
-        print("Cilindrada: ", dados[5])
-        print("Potencia: ", dados[6])
-        print("Numero de lugares: ", dados[7])
-        print(" ")
+    for data in c:
+        print("ID: ", data[0])
+        print("Name: ", data[1])
+        print("Drivers License Type: ", data[2])
+        print("Years of License: ", data[3])
         print("-------------------------------")
         print(" ")
+    press_enter()
+
+def remove_drivers():
+    
+    global conn
+    conn = sqlite3.connect('garage.db')
+    
+    display_drivers()
+    
+    print("# ----- REMOVE DRIVER ----- #")
+    id = int(input("Insert the ID of the driver you want to remove: "))
+    
+    sql = '''
+        DELETE FROM condutores WHERE id = ?;
+    '''
+    
+    c = conn.cursor()
+    
+    try:
+        c.execute(sql, (id,))
+        conn.commit()
+        print("The driver was removed successfully!")
+        press_enter()
+    except Exception as error:
+        print("Error: ", error)
+        press_enter()
+    
+    clear_console()
