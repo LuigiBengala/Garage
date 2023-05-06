@@ -4,6 +4,7 @@ import sqlite3
 
 create_database()
 
+
 option = 10000
 
 while (option != 0):
@@ -15,8 +16,9 @@ while (option != 0):
     print("2 - Display drivers")
     print("3 - Add car")
     print("4 - Add driver")
-    print("5 - Remove Car")
-    print("6 - Remove Driver")
+    print("5 - Add driver to car")
+    print("6 - Remove Car")
+    print("7 - Remove Driver")
     print("0 - Leave")
     
     option = int(input("Insert option (0-6)-> "))
@@ -36,9 +38,11 @@ while (option != 0):
             add_drivers()
             pass
         case 5:
+            add_driver_to_car()
+        case 6:
             remove_cars()
             pass
-        case 6:
+        case 7:
             remove_drivers()
             pass
         case 0:

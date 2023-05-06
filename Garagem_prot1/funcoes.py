@@ -46,6 +46,37 @@ def add_carros():
 
     clear_console()
 
+def add_driver_to_car():
+    
+    clear_console()
+    
+    global conn
+    conn = sqlite3.connect('garage.db')
+    
+    show_cars()
+    display_drivers()
+    
+    print("# ----- ADD DRIVER TO CAR ----- #")
+    driver_id = int(input("Insert the ID of the driver: "))
+    car_id = int(input("Insert the ID of the car: "))
+    
+    sql = '''
+        UPDATE carros SET driver_id = ? WHERE id = ?;
+    '''
+    
+    c = conn.cursor()
+    
+    try:
+        c.execute(sql, (driver_id, car_id,))
+        conn.commit()
+        print("The driver was added to the car successfully!")
+        press_enter()
+    except Exception as error:
+        print("Error: ", error)
+        press_enter()
+    
+    clear_console()
+
 def show_cars():
 
     clear_console()
@@ -54,7 +85,7 @@ def show_cars():
     conn = sqlite3.connect('garage.db')
 
     sql = '''
-        SELECT id, brand, model, year, fuel, engine_capacity, engine_power, num_seats FROM carros;
+        SELECT id, driver_id, brand, model, year, fuel, engine_capacity, engine_power, num_seats FROM carros;
     '''
 
     c = conn.execute(sql)
@@ -65,13 +96,14 @@ def show_cars():
 
     for data in c:
         print("ID: ", data[0])
-        print("Brand: ", data[1])
-        print("Model: ", data[2])
-        print("Year: ", data[3])
-        print("Fuel: ", data[4])
-        print("Engine Capacity: ", data[5])
-        print("Engine Power(Horse Power): ", data[6])
-        print("Number of Seats: ", data[7])
+        print("Driver: ", data[1])
+        print("Brand: ", data[2])
+        print("Model: ", data[3])
+        print("Year: ", data[4])
+        print("Fuel: ", data[5])
+        print("Engine Capacity: ", data[6])
+        print("Engine Power(Horse Power): ", data[7])
+        print("Number of Seats: ", data[8])
         print("-------------------------------")
         print(" ")
     press_enter()
