@@ -1,9 +1,7 @@
 from funcoes import *
 from tables import *
-import sqlite3
 
 create_database()
-
 
 option = 10000
 
@@ -32,7 +30,7 @@ while (option != 0):
             display_drivers()
             pass
         case 3:
-            add_carros()
+            add_cars()
             pass
         case 4:
             add_drivers()

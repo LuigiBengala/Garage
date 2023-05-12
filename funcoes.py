@@ -12,7 +12,7 @@ def press_enter():
 # ----------- CARS -----------
 
 
-def add_carros():
+def add_cars():
 
     clear_console()
 
@@ -29,7 +29,7 @@ def add_carros():
     num_seats = int(input("Number of Seats: "))
 
     sql = '''
-        INSERT INTO carros(brand, model, year, fuel, engine_capacity, engine_power, num_seats) VALUES(?,?,?,?,?,?,?);
+        INSERT INTO cars(brand, model, year, fuel, engine_capacity, engine_power, num_seats) VALUES(?,?,?,?,?,?,?);
     '''
 
     c = conn.cursor()
@@ -61,7 +61,7 @@ def add_driver_to_car():
     car_id = int(input("Insert the ID of the car: "))
     
     sql = '''
-        UPDATE carros SET driver_id = ? WHERE id = ?;
+        INSERT INTO drivers_cars(driver_id, car_id) VALUES(?,?);
     '''
     
     c = conn.cursor()
@@ -85,7 +85,7 @@ def show_cars():
     conn = sqlite3.connect('garage.db')
 
     sql = '''
-        SELECT id, driver_id, brand, model, year, fuel, engine_capacity, engine_power, num_seats FROM carros;
+        SELECT * FROM cars;
     '''
 
     c = conn.execute(sql)
@@ -95,15 +95,27 @@ def show_cars():
     print("-------------------------------")
 
     for data in c:
+        
+        sql_drivers = '''
+            SELECT name FROM drivers WHERE id IN (SELECT driver_id FROM drivers_cars WHERE car_id = ?);
+        '''
+        
+        drivers = conn.execute(sql_drivers, (data[0],))
+        
+        drivers_str = ""
+        
+        for driver in drivers:
+            drivers_str += driver[0] + ", "
+        
         print("ID: ", data[0])
-        print("Driver: ", data[1])
-        print("Brand: ", data[2])
-        print("Model: ", data[3])
-        print("Year: ", data[4])
-        print("Fuel: ", data[5])
-        print("Engine Capacity: ", data[6])
-        print("Engine Power(Horse Power): ", data[7])
-        print("Number of Seats: ", data[8])
+        print("Drivers: ", drivers_str)
+        print("Brand: ", data[1])
+        print("Model: ", data[2])
+        print("Year: ", data[3])
+        print("Fuel: ", data[4])
+        print("Engine Capacity: ", data[5])
+        print("Engine Power(Horse Power): ", data[6])
+        print("Number of Seats: ", data[7])
         print("-------------------------------")
         print(" ")
     press_enter()
@@ -121,7 +133,7 @@ def remove_cars():
         id = int(input("Insert the ID of the car you want to remove: "))
     
         sql = '''
-            DELETE FROM carros WHERE id = ?;
+            DELETE FROM cars WHERE id = ?;
         '''
     
         c = conn.cursor()
@@ -153,7 +165,7 @@ def add_drivers():
     years_of_license = int(input("Years of License: "))
     
     sql = '''
-        INSERT INTO condutores(name, drivers_license_type, years_of_license) VALUES(?,?,?);
+        INSERT INTO drivers(name, drivers_license_type, years_of_license) VALUES(?,?,?);
     '''
     
     c = conn.cursor()
@@ -169,11 +181,13 @@ def add_drivers():
 
 def display_drivers():
     
+    clear_console()
+    
     global conn
     conn = sqlite3.connect('garage.db')
     
     sql = '''
-        SELECT id, name, drivers_license_type, years_of_license FROM condutores;
+        SELECT id, name, drivers_license_type, years_of_license FROM drivers;
     '''
     
     c = conn.execute(sql)
@@ -184,12 +198,26 @@ def display_drivers():
     print("-------------------------------")
     
     for data in c:
+        
+        sql_cars = '''
+            SELECT brand FROM cars WHERE id IN (SELECT car_id FROM drivers_cars WHERE driver_id = ?);
+        '''
+        
+        cars = conn.execute(sql_cars, (data[0],))
+        
+        cars_str = ""
+        
+        for car in cars:
+            cars_str += car[0] + ", "
+        
         print("ID: ", data[0])
         print("Name: ", data[1])
+        print("Cars: ", cars_str)
         print("Drivers License Type: ", data[2])
         print("Years of License: ", data[3])
         print("-------------------------------")
         print(" ")
+        
     press_enter()
 
 def remove_drivers():
@@ -203,7 +231,7 @@ def remove_drivers():
     id = int(input("Insert the ID of the driver you want to remove: "))
     
     sql = '''
-        DELETE FROM condutores WHERE id = ?;
+        DELETE FROM drivers WHERE id = ?;
     '''
     
     c = conn.cursor()
