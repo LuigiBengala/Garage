@@ -22,6 +22,7 @@ def add_cars():
     print("# ----- ADD CAR ----- #")
     brand = input("Brand: ")
     model = input("Model: ")
+    plate = input("Plate: ")
     year = int(input("Year: "))
     fuel = input("Fuel: ")
     engine_capacity = float(input("Engine Capacity: "))
@@ -29,13 +30,13 @@ def add_cars():
     num_seats = int(input("Number of Seats: "))
 
     sql = '''
-        INSERT INTO cars(brand, model, year, fuel, engine_capacity, engine_power, num_seats) VALUES(?,?,?,?,?,?,?);
+        INSERT INTO cars(brand, model, plate, year, fuel, engine_capacity, engine_power, num_seats) VALUES(?,?,?,?,?,?,?,?);
     '''
 
     c = conn.cursor()
 
     try:
-        c.execute(sql, (brand, model, year, fuel,
+        c.execute(sql, (brand, model, plate, year, fuel,
                   engine_capacity, engine_power, num_seats,))
         conn.commit()
         print("The car was added successfully!")
@@ -111,11 +112,12 @@ def show_cars():
         print("Drivers: ", drivers_str)
         print("Brand: ", data[1])
         print("Model: ", data[2])
-        print("Year: ", data[3])
-        print("Fuel: ", data[4])
-        print("Engine Capacity: ", data[5])
-        print("Engine Power(Horse Power): ", data[6])
-        print("Number of Seats: ", data[7])
+        print("Plate: ", data[3])
+        print("Year: ", data[4])
+        print("Fuel: ", data[5])
+        print("Engine Capacity: ", data[6])
+        print("Engine Power(Horse Power): ", data[7])
+        print("Number of Seats: ", data[8])
         print("-------------------------------")
         print(" ")
     press_enter()
@@ -200,7 +202,7 @@ def display_drivers():
     for data in c:
         
         sql_cars = '''
-            SELECT brand FROM cars WHERE id IN (SELECT car_id FROM drivers_cars WHERE driver_id = ?);
+            SELECT brand, model, plate FROM cars WHERE id IN (SELECT car_id FROM drivers_cars WHERE driver_id = ?);
         '''
         
         cars = conn.execute(sql_cars, (data[0],))
@@ -208,7 +210,7 @@ def display_drivers():
         cars_str = ""
         
         for car in cars:
-            cars_str += car[0] + ", "
+            cars_str += car[0] + " " + car[1] + " / Plate -> " + car[2] + ", "
         
         print("ID: ", data[0])
         print("Name: ", data[1])

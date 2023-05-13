@@ -11,6 +11,7 @@ def create_database():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         brand TEXT NOT NULL,
         model TEXT NOT NULL,
+        plate TEXT NOT NULL,
         year INTEGER NOT NULL,
         fuel TEXT NOT NULL,
         engine_capacity FLOAT NOT NULL,
