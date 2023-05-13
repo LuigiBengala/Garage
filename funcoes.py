@@ -2,12 +2,15 @@ import os
 import sqlite3
 
 
+# ----------- Functions  -----------
+
+
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-
 def press_enter():
     input("Press ENTER to continue...")
+
 
 # ----------- CARS -----------
 
@@ -47,40 +50,7 @@ def add_cars():
 
     clear_console()
 
-def add_driver_to_car():
-    
-    clear_console()
-    
-    global conn
-    conn = sqlite3.connect('garage.db')
-    
-    show_cars()
-    display_drivers()
-    
-    print("# ----- ADD DRIVER TO CAR ----- #")
-    driver_id = int(input("Insert the ID of the driver: "))
-    car_id = int(input("Insert the ID of the car: "))
-    
-    sql = '''
-        INSERT INTO drivers_cars(driver_id, car_id) VALUES(?,?);
-    '''
-    
-    c = conn.cursor()
-    
-    try:
-        c.execute(sql, (driver_id, car_id,))
-        conn.commit()
-        print("The driver was added to the car successfully!")
-        press_enter()
-    except Exception as error:
-        print("Error: ", error)
-        press_enter()
-    
-    clear_console()
-
 def show_cars():
-
-    clear_console()
 
     global conn
     conn = sqlite3.connect('garage.db')
@@ -183,8 +153,6 @@ def add_drivers():
 
 def display_drivers():
     
-    clear_console()
-    
     global conn
     conn = sqlite3.connect('garage.db')
     
@@ -242,6 +210,42 @@ def remove_drivers():
         c.execute(sql, (id,))
         conn.commit()
         print("The driver was removed successfully!")
+        press_enter()
+    except Exception as error:
+        print("Error: ", error)
+        press_enter()
+    
+    clear_console()
+
+
+# ----------- DRIVERS TO CARS -----------
+
+
+def add_driver_to_car():
+    
+    clear_console()
+    
+    global conn
+    conn = sqlite3.connect('garage.db')
+    
+    show_cars()
+    
+    display_drivers()
+    
+    print("# ----- ADD DRIVER TO CAR ----- #")
+    driver_id = int(input("Insert the ID of the driver: "))
+    car_id = int(input("Insert the ID of the car: "))
+    
+    sql = '''
+        INSERT INTO drivers_cars(driver_id, car_id) VALUES(?,?);
+    '''
+    
+    c = conn.cursor()
+    
+    try:
+        c.execute(sql, (driver_id, car_id,))
+        conn.commit()
+        print("The driver was added to the car successfully!")
         press_enter()
     except Exception as error:
         print("Error: ", error)

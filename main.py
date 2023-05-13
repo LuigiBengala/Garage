@@ -18,15 +18,16 @@ while (option != 0):
     print("6 - Remove Car")
     print("7 - Remove Driver")
     print("0 - Leave")
-    
+
     option = int(input("Insert option (0-6)-> "))
     
     match option:
         case 1:
-            show_cars()
             clear_console()
+            show_cars()
             pass
         case 2:
+            clear_console()
             display_drivers()
             pass
         case 3:
@@ -48,4 +49,9 @@ while (option != 0):
             print("Leaving...")
             press_enter()
             clear_console()
+            pass
+        case _:
+            clear_console()
+            print("Error! Invalid option!")
+            press_enter()
             pass
