@@ -12,7 +12,7 @@ def press_enter():
     input("Press ENTER to continue...")
 
 
-# ----------- CARS -----------
+# ----------- CARS ----------------
 
 
 def add_cars():
