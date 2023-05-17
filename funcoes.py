@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import sqlite3
 
 
@@ -10,6 +11,37 @@ def clear_console():
 
 def press_enter():
     input("Press ENTER to continue...")
+
+def input_int(message: str, min: int | None = None, max: int | None = None) -> int:
+    while True:
+        try:
+            value = int(input(message))
+            
+            if min is not None and value < min:
+                print("Invalid value! Introduce an intiger, higher or equal to", min)
+                continue
+            if max is not None and value > max:
+                print("Invalid value! Introduce an intiger, lower or equal to", max)
+                continue
+            return value
+        except ValueError:
+            print("Invalid value! Introduce an intiger!")
+
+def input_float(message: str) -> float:
+    while True:
+        try:
+            return float(input(message))
+        except ValueError:
+            print("Invalid value! Introduce a float!")
+        
+def input_year(message: str) -> int:
+    while True:
+        year = int(input(message))
+        actual_year = datetime.now().year
+        if year > actual_year:
+            print("Invalid value! Introduce a year lower or equal to", actual_year)
+            continue
+        return year
 
 
 # ----------- CARS ----------------
@@ -26,11 +58,11 @@ def add_cars():
     brand = input("Brand: ")
     model = input("Model: ")
     plate = input("Plate: ")
-    year = int(input("Year: "))
+    year = input_year("Year: ")
     fuel = input("Fuel: ")
-    engine_capacity = float(input("Engine Capacity: "))
+    engine_capacity = input_float("Engine Capacity: ")
     engine_power = input("Engine Power (Horse Power): ")
-    num_seats = int(input("Number of Seats: "))
+    num_seats = input_int("Number of Seats: ", 1, 9)
 
     sql = '''
         INSERT INTO cars(brand, model, plate, year, fuel, engine_capacity, engine_power, num_seats) VALUES(?,?,?,?,?,?,?,?);
@@ -102,7 +134,7 @@ def remove_cars():
         show_cars()
     
         print("# ----- REMOVE CAR ----- #")
-        id = int(input("Insert the ID of the car you want to remove: "))
+        id = input_int("Insert the ID of the car you want to remove: ")
     
         sql = '''
             DELETE FROM cars WHERE id = ?;
@@ -134,7 +166,7 @@ def add_drivers():
     print("# ----- ADD DRIVER ----- #")
     name = input("Name: ")
     drivers_license_type = input("Drivers License Type: ")
-    years_of_license = int(input("Years of License: "))
+    years_of_license = input_year("Year you get your licence: ")
     
     sql = '''
         INSERT INTO drivers(name, drivers_license_type, years_of_license) VALUES(?,?,?);
@@ -198,7 +230,7 @@ def remove_drivers():
     display_drivers()
     
     print("# ----- REMOVE DRIVER ----- #")
-    id = int(input("Insert the ID of the driver you want to remove: "))
+    id = input_int("Insert the ID of the driver you want to remove: ")
     
     sql = '''
         DELETE FROM drivers WHERE id = ?;
@@ -233,8 +265,8 @@ def add_driver_to_car():
     display_drivers()
     
     print("# ----- ADD DRIVER TO CAR ----- #")
-    driver_id = int(input("Insert the ID of the driver: "))
-    car_id = int(input("Insert the ID of the car: "))
+    driver_id = input_int("Insert the ID of the driver: ")
+    car_id = input_int("Insert the ID of the car: ")
     
     sql = '''
         INSERT INTO drivers_cars(driver_id, car_id) VALUES(?,?);

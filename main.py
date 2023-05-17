@@ -19,7 +19,7 @@ while (option != 0):
     print("7 - Remove Driver")
     print("0 - Leave")
 
-    option = int(input("Insert option (0-6)-> "))
+    option = input_int("Insert option (0-7)-> ", 0, 7)
     
     match option:
         case 1:
