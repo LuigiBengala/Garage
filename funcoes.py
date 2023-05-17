@@ -18,14 +18,14 @@ def input_int(message: str, min: int | None = None, max: int | None = None) -> i
             value = int(input(message))
             
             if min is not None and value < min:
-                print("Invalid value! Introduce an intiger, higher or equal to", min)
+                print("Invalid value! Introduce an ent3ger, higher or equal to", min)
                 continue
             if max is not None and value > max:
-                print("Invalid value! Introduce an intiger, lower or equal to", max)
+                print("Invalid value! Introduce an enteger, lower or equal to", max)
                 continue
             return value
         except ValueError:
-            print("Invalid value! Introduce an intiger!")
+            print("Invalid value! Introduce an enteger!")
 
 def input_float(message: str) -> float:
     while True:
